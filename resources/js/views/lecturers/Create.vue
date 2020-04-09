@@ -3,19 +3,19 @@
     <b-col cols="8">
       <div class="card" tag="article">
         <div class="card-header">
-          <h1>Create Course</h1>
+          <h1>Create Lecturer</h1>
         </div>
-        <div class="card-body">
+          <div class="card-body">
         <b-form @submit="onSubmit">
             <b-form-group id="input-group-1"
-             label="Title:"
+             label="Name:"
              label-for="input-1">
              <b-form-input
              id="input-1"
              type="text"
              required
-             placeholder="Enter Title"
-             v-model="form.title"
+             placeholder="Enter Name"
+             v-model="form.name"
              >
 
              </b-form-input>
@@ -23,73 +23,52 @@
             </b-form-group>
 
             <b-form-group id="input-group-2"
-             label="Code:"
+             label="Address:"
              label-for="input-2">
              <b-form-input
              id="input-2"
              type="text"
              required
-             placeholder="Enter Code"
-             v-model="form.code"
+             placeholder="Enter Address"
+             v-model="form.address"
              >
 
              </b-form-input>
-             <b-form-invalid-feedback :state="codeValid">
-               code may not be greater than 5 characters.
-             </b-form-invalid-feedback>
-             <b-form-valid-feedback :state="codeValid">
-               Looks Good!
-             </b-form-valid-feedback>
             </b-form-group>
 
             <b-form-group id="input-group-3"
-             label="Description:"
+             label="Email:"
              label-for="input-3">
              <b-form-input
              id="input-3"
              type="text"
              required
-             placeholder="Enter Description"
-             v-model="form.description"
+             placeholder="Enter Email"
+             v-model="form.email"
              >
 
              </b-form-input>
             </b-form-group>
 
             <b-form-group id="input-group-4"
-             label="Points:"
+             label="Phone:"
              label-for="input-4">
              <b-form-input
              id="input-4"
-             type="number"
+             type="text"
              required
-             placeholder="Enter Points"
-             v-model="form.points"
+             placeholder="Enter Phone Number"
+             v-model="form.phone"
              >
 
              </b-form-input>
             </b-form-group>
-
-            <b-form-group id="input-group-5"
-             label="Level:"
-             label-for="input-5">
-             <b-form-input
-             id="input-5"
-             type="number"
-             required
-             placeholder="Enter Level"
-             v-model="form.level"
-             >
-
-             </b-form-input>
-            </b-form-group>
-
 
 
         <b-button class="submit" type="submit">Submit</b-button>
         </b-form>
       </div>
-    </div>
+      </div>
     </b-col>
   </b-row>
 </template>
@@ -99,19 +78,13 @@ export default {
   data(){
     return {
       form:{
-        title: '',
-        code: '',
-        description: '',
-        points: '',
-        level: ''
+        name: '',
+        address: '',
+        email: '',
+        phone: ''
       },
       loggedIn: false,
       errors:[]
-    }
-  },
-  computed:{
-    codeValid(){
-      return this.form.code.length <= 5 && this.form.code.length > 0
     }
   },
   created(){
@@ -129,18 +102,17 @@ export default {
       let app = this;
       let token = localStorage.getItem('token');
 
-      axios.post('/api/courses/', {
-        title: app.form.title,
-        code: app.form.code,
-        description: app.form.description,
-        points: app.form.points,
-        level: app.form.level
+      axios.post('/api/lecturers/', {
+        name: app.form.name,
+        address: app.form.address,
+        email: app.form.email,
+        phone: app.form.phone
        },
        {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(function(response) {
-        app.$router.push('/courses');
+        app.$router.push('/lecturers');
       })
       .catch(function(error){
         console.log(error.response.data);

@@ -6,87 +6,73 @@
         v-else
         tag="article"
       >
-
       <div class="card-header">
-        <h1>Edit Course</h1>
+        <h1>Edit Lecturer</h1>
       </div>
 
       <div class="card-body">
         <b-form @submit="onSubmit">
           <b-form-group
             id="input-group-1"
-            label="Title:"
+            label="Name:"
             label-for="input-1"
           >
             <b-form-input
               id="input-1"
-              v-model="course.title"
+              v-model="lecturer.name"
               type="text"
               required
-              placeholder="Enter title"
+              placeholder="Enter Name"
             ></b-form-input>
           </b-form-group>
 
           <b-form-group
             id="input-group-2"
-            label="Code:"
+            label="Address:"
             label-for="input-2"
           >
             <b-form-input
               id="input-2"
-              v-model="course.code"
+              v-model="lecturer.address"
               type="text"
               required
-              placeholder="Enter code"
+              placeholder="Enter Address"
             ></b-form-input>
           </b-form-group>
 
           <b-form-group
             id="input-group-3"
-            label="Description:"
+            label="Email:"
             label-for="input-3"
           >
             <b-form-input
               id="input-3"
-              v-model="course.description"
+              v-model="lecturer.email"
               type="text"
               required
-              placeholder="Enter description"
+              placeholder="Enter email"
             ></b-form-input>
           </b-form-group>
 
           <b-form-group
             id="input-group-4"
-            label="Points:"
+            label="Phone:"
             label-for="input-4"
           >
             <b-form-input
               id="input-4"
-              v-model="course.points"
-              type="number"
+              v-model="lecturer.phone"
+              type="text"
               required
-              placeholder="Enter points"
+              placeholder="Enter phone"
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group
-            id="input-group-5"
-            label="Level:"
-            label-for="input-5"
-          >
-            <b-form-input
-              id="input-5"
-              v-model="course.level"
-              type="number"
-              required
-              placeholder="Enter level"
-            ></b-form-input>
-          </b-form-group>
 
           <b-button class="submit" type="submit">Submit</b-button>
         </b-form>
       </div>
-    </div>
+      </div>
     </b-col>
   </b-row>
 </template>
@@ -95,7 +81,7 @@
   export default {
     data() {
       return {
-        course: {},
+        lecturer: {},
         show: true,
         loggedIn: false
       }
@@ -111,11 +97,11 @@
 
       let app = this;
       let token = localStorage.getItem('token');
-      axios.get(`/api/courses/${app.$route.params.id}`, {
+      axios.get(`/api/lecturers/${app.$route.params.id}`, {
         headers: { Authorization: "Bearer " + token }
       })
       .then(function (response) {
-        app.course = response.data.data;
+        app.lecturer = response.data.data;
       })
       .catch(function (error) {
         console.log(error);
@@ -128,19 +114,18 @@
 
         let app = this;
         let token = localStorage.getItem('token');
-        axios.put(`/api/courses/${app.$route.params.id}`, {
-            title: app.course.title,
-            code: app.course.code,
-            description: app.course.description,
-            points: app.course.points,
-            level: app.course.level,
+        axios.put(`/api/lecturers/${app.$route.params.id}`, {
+            name: app.lecturer.name,
+            address: app.lecturer.address,
+            email: app.lecturer.email,
+            phone: app.lecturer.phone,
         },
         {
           headers: { Authorization: "Bearer " + token }
         })
         .then(function (response) {
           //redirect
-          app.$router.push('/courses');
+          app.$router.push('/lecturers');
         })
         .catch(function (error) {
           console.log(error);
